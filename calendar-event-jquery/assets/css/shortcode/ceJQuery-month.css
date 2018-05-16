@@ -1,0 +1,19 @@
+.container {
+
+}
+.col4 {width:40%;}
+.col6 {width:60%;}
+.cej-block {
+
+}
+.cej-datetime {
+    display: inline-block;
+    float: right;
+}
+.cej-datepicker {
+
+}
+.cej-datetime-result {
+    display: inline-block;
+    float: left;
+}
