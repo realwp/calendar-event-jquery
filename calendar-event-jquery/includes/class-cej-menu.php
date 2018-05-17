@@ -51,6 +51,7 @@ class CEJ_Menu
 
         $submenu['cej_about'][] = [__('همه رویداد ها'), 'activate_plugins', get_admin_url() . 'edit.php?post_type=calendareventjquery', 'calendar-event-jquery'];
         $submenu['cej_about'][] = [__('افزودن رویداد جدید'), 'activate_plugins', get_admin_url() . 'post-new.php?post_type=calendareventjquery', 'calendar-event-jquery'];
+        $submenu['cej_about'][] = [__('دسته بندی رویداد'), 'activate_plugins', get_admin_url() . 'edit-tags.php?taxonomy=calendarEventJQuery_category&post_type=calendareventjquery', 'calendar-event-jquery'];
 
         add_submenu_page('cej_about', $this->plugin_name, __('درباره پلاگین', ''), 'activate_plugins', 'cej_about', array($obj_page, 'about'));
     }
