@@ -1,5 +1,5 @@
 jQuery(document).ready(function(){
-    var object_data = object_date_picker, disabledDays = [], counter = 0, y = object_date_picker.year, m = object_date_picker.month;
+    var object_data = object_date_picker, disabledDays = [], counter = 0, y = object_date_picker.year, m = object_date_picker.month, taxonomy = object_date_picker.taxonomy;
     jQuery( "#cej-datepicker").datepicker({
         inline: true,
         isRTL: true,
@@ -23,7 +23,8 @@ jQuery(document).ready(function(){
                     data: {
                         action: 'cej_ajax_public',
                         year: y,
-                        month: m
+                        month: m,
+                        taxonomy: taxonomy,
                     },
                     beforeSend: function() {
                         disabledDays = [];
@@ -33,26 +34,26 @@ jQuery(document).ready(function(){
                     },
                 });
                 if(data_responce.ok) {
-                    $('.cej-datetime-result').html(data_responce.theme);
+                    jQuery('.cej-datetime-result').html(data_responce.theme);
                     for(var i=0 ; i<data_responce.posts.length ; i++) {
                         for(var j=0 ; j<data_responce.posts[i].ranges.length ; j++) {
                             disabledDays.push(data_responce.posts[i].ranges[j]);
                         }
                     }
                     for (i=0 ; i<disabledDays.length ; i++) {
-                        if($.inArray(y + '/' + m + '/' + d, disabledDays) != -1) {
+                        if(jQuery.inArray(y + '/' + m + '/' + d, disabledDays) != -1) {
                             return [false, 'ui-state-active', ''];
                         }
                     }
                     return [true];
                 } else {
-                    $('.cej-datetime-result').html('');
+                    jQuery('.cej-datetime-result').html(data_responce.theme);
                     return [true];
                 }
             } else {
                 counter++;
                 for (i = 0; i < disabledDays.length; i++) {
-                    if($.inArray(y + '/' + m + '/' + d, disabledDays) != -1) {
+                    if(jQuery.inArray(y + '/' + m + '/' + d, disabledDays) != -1) {
                         return [true, 'ui-state-active', ''];
                     }
                 }

@@ -51,6 +51,7 @@ class CEJ_Ajax
     {
         $year = (isset($_POST['year'])) ? $_POST['year'] : null;
         $month = (isset($_POST['month'])) ? $_POST['month'] : null;
+        $taxonomy = (isset($_POST['taxonomy'])) ? $_POST['taxonomy'] : null;
 
         $json['ok'] = false;
         if($year) {
@@ -67,6 +68,15 @@ class CEJ_Ajax
                         ),
                     ),
                 );
+                if($taxonomy) {
+                    $args['tax_query'] = array(
+                        array(
+                            'taxonomy' => 'calendarEventJQuery_category',
+                            'field'    => 'slug',
+                            'terms'    => $taxonomy,
+                        ),
+                    );
+                }
 
                 $query = new WP_Query($args);
 
@@ -93,6 +103,9 @@ class CEJ_Ajax
             }
         } else {
             $json['error'] = 'سال ارسال نشده است';
+        }
+        if(!$json['ok']) {
+            $json['theme'] = cej_get_view('shortCode/ceJQuery-month-ajax-error', $data);;
         }
         
         wp_send_json($json);

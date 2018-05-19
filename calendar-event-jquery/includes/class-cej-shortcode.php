@@ -54,8 +54,10 @@ class CEJ_Shortcode
          * type = month_time     => show month type date time picker
          * */
         $type = null;
+        $taxonomy = null;
         extract(shortcode_atts(array(
             "type" => 'month',
+            "taxonomy" => null,
         ), $attributes));
 
         $date_year_e = cej_jdate('Y', '', '', 'Asia/Tehran', 'en');
@@ -81,6 +83,16 @@ class CEJ_Shortcode
                         ),
                     ),
                 );
+                if($taxonomy) {
+                    $args['tax_query'] = array(
+                        array(
+                            'taxonomy' => 'calendarEventJQuery_category',
+                            'field'    => 'slug',
+                            'terms'    => $taxonomy,
+                        ),
+                    );
+                }
+
                 $query = new WP_Query($args);
 
                 foreach($query->posts as $index => $post) {
@@ -98,7 +110,8 @@ class CEJ_Shortcode
                     'url' => admin_url('admin-ajax.php'),
                     'posts' => $posts,
                     'year' => intval($date_year_e),
-                    'month' => intval($date_month_e)
+                    'month' => intval($date_month_e),
+                    'taxonomy' => $taxonomy
                 );
                 // Localize the script with new data
                 wp_localize_script('cej-ceJQuery-month', 'object_date_picker', $object_data);
